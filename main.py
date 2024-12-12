@@ -8,9 +8,22 @@ Created on Thu Oct 24 18:58:00 2024
 import numpy as np
 import pickle
 import streamlit as st
+import os
 
-#loading the saved model
-loaded_model = pickle.load(open(r'D:\ML Stuff\diabetes-prediction-system\trained_model.sav', 'rb'))
+# #loading the saved model
+# loaded_model = pickle.load(open(r'D:\ML Stuff\diabetes-prediction-system\trained_model.sav', 'rb'))
+# Use a relative path to load the model
+current_dir = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(current_dir, 'trained_model.sav')
+
+# Load the model
+try:
+    loaded_model = pickle.load(open(model_path, 'rb'))
+    print("Model loaded successfully.")
+except FileNotFoundError:
+    print(f"Model file not found at: {model_path}")
+except Exception as e:
+    print(f"Error loading model: {e}")
 
 #creating a function for prediction
 def diabetes_prediction(input_data):
